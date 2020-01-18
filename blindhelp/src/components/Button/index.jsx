@@ -19,11 +19,31 @@ recognition.onend = () => {
 
 recognition.onresult = (event) => {
     for (var i = event.resultIndex; i < event.results.length; ++i) {
-        console.log(event.results[i][0].transcript);
+        const word = event.results[i][0].transcript;
+        console.log(word);
+        if (word.indexOf(' ') < 0) {
+            // const request = new Request('/send', {method: 'POST', body: `{"word": "oof"}`});
+            const request = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "word": word
+                })
+            };
+            const url = '/send';
+            fetch(url, request)
+                .then(response => {
+                    console.log(response.status);
+                    // return response.json();
+                })
+        };
     }
 }
 
 const makeRecognition = (event) => {
+    console.log("button pressed");
     if (recognizing) {
         recognition.stop();
     } else {
