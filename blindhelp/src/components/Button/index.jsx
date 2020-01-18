@@ -32,12 +32,17 @@ recognition.onresult = (event) => {
                     "word": word
                 })
             };
-            const url = '/send';
+            const url = '/sendtodragon';
             fetch(url, request)
-                .then(response => {
-                    console.log(response.status);
-                    // return response.json();
+                .then(response => response.json())
+                .then((data) => {
+                    if (!data["wordSent"]) {
+                        recognition.stop();
+                    }
                 })
+                .catch((err) => {
+                    console.log(err);
+                });
         };
     }
 }

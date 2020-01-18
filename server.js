@@ -16,7 +16,41 @@ app.use((req, res, next) => {
     next();
 });
 
-app.post('/send', (req, res) => {
-    const params = req.body;
-    res.status(200).send({"word": params.word});
+// Variables storing where each object is located in which quadrant (1-4)
+const quadrantList = ["", "", "", ""];
+
+// List indicating where each quadrant is: [top left, top right, bottom right, bottom left].
+// The top left corner will always be where items are placed and/or dropped off.
+const quadrantLocations = [1, 2, 3, 4];
+
+app.post('/sendtodragon', (req, res) => {
+    const word = req.body.word;
+    const response = {
+        "wordReceived": word,
+        "wordSent": false
+    };
+    if (word in quadrantList) {
+        // Logic to send the object name and the amount of times the place should rotate
+        const quadrantWordIdx = quadrantList.indexOf(word);
+        const quadrantLocation = quadrantLocations.indexOf(quadrantWordIdx);
+        const numOfRotations = (quadrantLocation) ? 4 - quadrantLocation : 0;
+        repsonse["wordSent"] = true;
+
+        // TODO: Logic to send object name to the dragonboard.
+    } else {
+
+    }
+    res.status(200).send(response);
+});
+
+app.get('/getquadrants', (req, res) => {
+    res.json({
+        "locations": quadrantLocations,
+        "order": quadrantList
+    });
+});
+
+// Post reqeust for data sent from the dragon board
+app.post('/receivedfromdragon', (req, res) => {
+
 });
