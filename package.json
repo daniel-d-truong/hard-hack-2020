@@ -20,8 +20,8 @@
   },
   "homepage": "https://github.com/daniel-d-truong/hard-hack-2020#readme",
   "dependencies": {
-    "body-parser": "^1.19.0",
-    "express": "^4.17.1",
+    "body-parser": "^1.20.1",
+    "express": "^4.18.2",
     "react": "^16.12.0",
     "react-router-dom": "^5.1.2"
   },
